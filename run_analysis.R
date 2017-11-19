@@ -1,8 +1,10 @@
-# Four objectives for this script:
+# Five objectives for this script:
 # 1. Merges the training and the test sets to create one data set.
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement.
 # 3. Uses descriptive activity names to name the activities in the data set.
 # 4. Appropriately labels the data set with descriptive variable names.
+# 5. From the data set in step 4, creates a second, independent tidy data set with the 
+#    average of each variable for each activity and each subject.
 
 # Merges the X training and X test sets into one dataset.
 # Training Data
@@ -54,16 +56,34 @@ full$activity <- factor(full$activity, levels = c(1:6),
 
 # Now I need to add variable names to the rest of the variables. Since these 
 # variables represent data that is fairly complicated for the average consumer,
-# I am going to retain the original names (in the features.txt document) and 
+# I am going to retain the original names (from the features.txt document) and 
 # use the codebook to explain what they actually mean. I fear that changing the 
 # names will actually make them less descriptive and more confusing to tell apart.
+# However, I did make two changes to improve readability: first, take out the "()"
+# present in almost all vars, and replace the dashes with periods as per the Google
+# style guide for naming variables (https://google.github.io/styleguide/Rguide.xml).
 
 feature2 <- feature[colnum,]
 varlist <- as.list(as.character(feature2$V2))
+varlist <- gsub("\\(|\\)","",varlist)
+varlist <- gsub("-",".",varlist)
+
 colnames(full)[3:81] <- c(varlist) 
 
 # All variables labeled. Now we can write the dataframe into a new file.
-
+setwd("~/Documents/Docs/Coursera/DataCleaning/ProjectDataset/")
 write.table(full, file = "FinalFullDataset.txt", row.name=FALSE)
 
-## Part 4 complete. End of script.
+## Part 4 complete. 
+
+# And for the last part we create an independent tidy dataset with the average
+# of each variable for each activity and each subject.
+full2 <- aggregate(. ~subject + activity, full, mean)
+full2 <- full2[order(full2$subject, full2$activity),]
+
+dim(full2)
+head(full2)
+tail(full2)
+write.table(full2, file = "TidyData2.txt",row.name=FALSE)
+
+#End of script.
