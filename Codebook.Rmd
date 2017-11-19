@@ -1,0 +1,23 @@
+---
+title: "Codebook"
+author: "Kat Devlin"
+date: "2017/11/19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Codebook Description
+
+This codebook corresponds to the `FinalFullDataset.txt` file, which can be found in this repo.
+
+## Variables
+
+This dataset includes 81 variables:
+
+`subject`: The experiment involved 30 participants, given a number from 1 to 30.
+`activity`: A factor variable from 1 to 6 indicating the movement of the subject when measurements were taken; factor level labels are "walking", "walking upstairs", "walking downstairs", "sitting", "standing" and "laying".
+
+The rest of the variables (3:81) all contain experiment measurements. A full decription of the variables, including units and precise definitions, can be found in the features_info.txt file located in the parent repo of this project. As per the project instructions, only variables containing mean or standard deviation measures are included in the final dataset. Variable names have been slightly altered for improved readability, removing "()" from the names and changing dashes to periods to meet naming style guidelines.
